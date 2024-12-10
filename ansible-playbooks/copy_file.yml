@@ -1,0 +1,10 @@
+---
+
+  - hosts: svn
+    remote_user: admin
+    tasks:
+      - name: replace file
+        copy:
+          src: ../svn-access-file
+          dest: /opt/collabNet/csvn/data/conf
+          mode: 0644

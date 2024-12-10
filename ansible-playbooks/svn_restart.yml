@@ -1,0 +1,16 @@
+---
+
+  - hosts: svn
+    remote_user: admin
+    tasks:
+      - name: stop SVN
+        command: opt/collabNet/csvn/bin/csvn stop
+      - name: start SVN
+        command: opt/collabNet/csvn/bin/csvn start
+      - name: check SVN status
+        command: opt/collabNet/csvn/bin/csvn status
+        register: results_status_svn
+
+      - name: Display output
+        debug:
+          var: result_status_svn.stdout_lines

@@ -1,0 +1,14 @@
+###########################################
+#                Groups                   #
+###########################################
+
+[groups]
+
+GLOBAL.Admins = user1, user2
+Group1 = user3, user4
+
+[/]
+* = rw
+
+[repo1:/]
+@GLOBAL.Admins = rw

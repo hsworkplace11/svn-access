@@ -1,0 +1,33 @@
+image: ubuntu
+
+stages:
+  - Update Users
+  - Restart SVN
+
+Update_Access_file:
+  stage: Update Users
+  before_script:
+    - mkdir -p /root/.ssh
+    - chmod 0700 /root/.ssh
+    - base64 -d ${ANSIBLE_SSH_KEY} > /root/.ssh/id_rsa
+    - chmod 0600 /root/.ssh/id_rsa
+  
+  script:
+    - ansible-playbook ansible-playbooks/copy_file.yml
+  only:
+    - master  #Adjust the branch as needed
+
+
+Restart_Subversion:
+  stage: Restart SVN
+  before_script:
+    - mkdir -p /root/.ssh
+    - chmod 0700 /root/.ssh
+    - base64 -d ${ANSIBLE_SSH_KEY} > /root/.ssh/id_rsa
+    - chmod 0600 /root/.ssh/id_rsa
+
+  script:
+    - ansible-playbook ansible-playbooks/svn_restart.yml
+  only:
+    - master  #Adjust the branch as needed
+  needs: ["Update_Access_file"]
